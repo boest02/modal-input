@@ -1,7 +1,6 @@
 <script>
   export let labelText;
   export let name;
-  export const type='';
   export let required = false;
   export let errorText;
 </script>
@@ -19,7 +18,7 @@
        
 </div>
   
-  <style type="text/scss">
+  <style>
     input {
         width: 25vw;
         min-width: 350px;
