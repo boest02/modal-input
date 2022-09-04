@@ -1,12 +1,9 @@
 <script>
   import Input from "./ModalInput.svelte";
-  import { afterUpdate } from "svelte"
 
   export let headerText;
   export let position = '';
   export let manifest = {};
-
-  console.log("Here...");
 
   let inputs = manifest.inputs || [];
 
@@ -15,12 +12,11 @@
 
   const validateForm = () => {
     let valid = true;
-    console.log("in validate: ", inputs);
+    
     inputs.forEach(input => {
         let inputWrapper = document.querySelector(`#input--${input.name}`);
         let inputElement = inputWrapper.querySelector('input');
-        console.log("validate: ", {inputWrapper, inputElement});
-        console.log("Input:: ", {value: inputElement.value, required: inputElement.required});
+       
         if(inputElement.required && !inputElement.value) {
           let errorHolder = inputWrapper.querySelector('.error-holder');
             console.log("error: ", errorHolder);
@@ -39,16 +35,13 @@
   };
 
   const closeModal = (ev) => {
-    console.log("Remove Self: ", modalHandle);
     ev.preventDefault();
     removingSelf = true;
     setTimeout(()=> modalHandle.remove(), 950);
   };
 
   const onSave = (ev) => {
-    console.log("save: ", ev);
     if(validateForm()) {
-      console.log("Form Validated...");
       closeModal(ev);
       manifest.answers = true;
       manifest = manifest;
@@ -60,8 +53,6 @@
   const onCancel = (ev) => {   
     closeModal(ev); 
   };
-
-  afterUpdate(()=> console.log("Updated!!!!, ", inputs));
 
 </script>
 
@@ -82,7 +73,7 @@
   </form>
 </div>
 
-<style type="text/scss">
+<style>
   .modal-background {
     position: fixed;
     top: 0;
