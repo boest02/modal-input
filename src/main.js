@@ -2,7 +2,9 @@ import App from "./App.svelte";
 class Modal {
   constructor() {
     this.manifest = {};
-    this.manifest.answers = false;    
+    this.manifest.answers = {}; 
+    this.manifest.styles = {};
+    this.manifest.styles.headerText = "Header";
   }
 
   get getManifest() {
@@ -11,6 +13,14 @@ class Modal {
 
   addInputs(inputs) {
     this.manifest.inputs = inputs;
+  }
+
+  addHeader(text) {
+    this.manifest.styles.headerText = text;
+  }
+
+  addSaveBtnText(text) {
+    this.manifest.styles.saveBtnText = text;
   }
 
   askUser() {    
@@ -23,18 +33,14 @@ class Modal {
         target: document.body,
         props: {
           manifest: this.getManifest,
-          resolveAnswers: () => this.getAnswers(resolve, reject)
+          resolveAnswers: () => this.getAnswers(resolve)
         }
       })
     })
   }
 
-  getAnswers(resolve, reject) {
-    if(!this.manifest.answers) {
-      reject(new Error("Canceled by User"));
-    } else {
-      resolve(this.manifest.inputs); 
-    }	
+  getAnswers(resolve) {
+    resolve(this.manifest.answers);     
   }
 }
 

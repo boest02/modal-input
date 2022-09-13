@@ -1,11 +1,11 @@
 <script>
   import Input from "./ModalInput.svelte";
 
-  export let headerText;
-  export let position = '';
   export let manifest = {};
 
   let inputs = manifest.inputs || [];
+  
+  let saveBtnText = manifest.styles.saveBtnText || 'Save';
 
   let modalHandle = {};
   let removingSelf = false;
@@ -19,13 +19,11 @@
        
         if(inputElement.required && !inputElement.value) {
           let errorHolder = inputWrapper.querySelector('.error-holder');
-            console.log("error: ", errorHolder);
-            input.error = "Error!!!";
-            console.log("error:", input);
+            input.error = "Response Required!";
             valid = false;
         } else {
-          input.error = "";
-          input.value = inputElement.value;
+          input.error = '';
+          manifest.answers[input.name] = inputElement.value;
         }
     });
     inputs = inputs; //reactive
@@ -43,7 +41,6 @@
   const onSave = (ev) => {
     if(validateForm()) {
       closeModal(ev);
-      manifest.answers = true;
       manifest = manifest;
     } else {
       console.log("Error: Form not validated...");
@@ -58,16 +55,16 @@
 
 <div class="modal-background" on:change={(ev)=> console.log(`Change of ${ev.target.name} ev=${ev.target.value}`)} bind:this={modalHandle} class:slide-out={removingSelf} >
   <form class="modal-box"
-        class:left={position === '' || position === 'left'}
-        class:center={position === 'center'}
-        class:right={position === 'right'}>
-    <div class="header">{headerText}</div>
+        class:left={manifest.styles.position === '' || manifest.styles.position === 'left'}
+        class:center={manifest.styles.position === 'center'}
+        class:right={manifest.styles.position === 'right'}>
+    <div class="header">{manifest.styles.headerText}</div>
     {#each inputs as input}
         <Input name={input.name} errorText={input.error} labelText={input.label} required={input.required}/>
     {/each}
     
     <div class="button-area">
-      <button type="submit" on:click={onSave} class="save-btn">Save</button>
+      <button type="submit" on:click={onSave} class="save-btn">{saveBtnText}</button>
       <button type="button" on:click={onCancel} class="cancel-btn">Cancel</button>
     </div>
   </form>
@@ -98,10 +95,10 @@
   .modal-background > .modal-box {
     border: 1px solid gray;
     border-radius: 15px;
-    padding: 65px 45px 35px;
+    padding: 70px 45px 35px;
     margin-top: 20vh;
-    width: fit-content;
-    font-size: 1rem;
+    width: 15vw;
+    min-width: 300px;
     color: #000;
     background-color: #fff;
     display: flex;
@@ -126,15 +123,40 @@
 }
 
   .modal-background > .modal-box > .header {
-    padding: 15px 0 0 10px;
+    padding: 10px;
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
-    height: 35px;
+    height: 11%;
     background-color: cornflowerblue;
     color: white;
-    font-size: 1.2rem;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+  }
+
+  .modal-background > .modal-box > .button-area {
+    width: 100%;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .modal-background > .modal-box > .button-area > button {
+    color: #fff;
+    background-color: slategray;
+    font-size: 15px;
+    padding: 5px 15px;
+    border: .5px solid #000;
+    border-radius: 5px;
+    box-shadow: 1px 1px 6px -1px rgba(0, 0, 0, 1);
+  }
+
+  .modal-background > .modal-box > .button-area > button.save-btn {
+    background-color: cornflowerblue;
   }
 
 

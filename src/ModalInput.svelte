@@ -19,19 +19,23 @@
 </div>
   
   <style>
-    input {
-        width: 75%;
-        min-width: 350px;
-        max-width: 450px;
+    .input-wrapper > input {
+        width: 80%;        
         border: 1px solid darkgray;
         background: #fff;
         color: #000;
-        font-size: 1rem;
+        font-size: 15px;
         padding: 5px;
+        border-radius: 5px;
+        margin: 5px 0;
     }
-    label {
-      font-size: 1rem;
+    .input-wrapper > label {
+      font-size: 15px;
       font-weight: 600;
+    }
+    .input-wrapper > .error-holder {
+      color: red;
+      font-weight: 800;
     }
   </style>
   

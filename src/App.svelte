@@ -5,11 +5,11 @@
   import Modal from "./Modal.svelte";
 
   $: {
-    if (manifest.answers) {
+    if (Object.keys(manifest.answers).length) {
       resolveAnswers();
     }
   }
 </script>
 
-<Modal bind:manifest headerText="This is the Header" position="left" />
+<Modal bind:manifest />
 

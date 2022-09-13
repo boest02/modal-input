@@ -24,6 +24,8 @@ let inputs =[
 let modal = new Modal();
 
 modal.addInputs(inputs);
+modal.addHeader("Test Header!");
+modal.addSaveBtnText("Let.s Go!");
 modal.askUser().then((result)=> console.log("@@@@@ Got Answers @@@: ", result)).catch((err=> console.log(err)));
 // modal.open();
 
